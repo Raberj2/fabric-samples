@@ -52,6 +52,19 @@ class CommercialPaperContract extends Contract {
         console.log('Instantiate the contract');
     }
 
+    async getPaper(ctx, issuer, paperNumber) {
+        try {
+            console.log('getPaper for: ' + issuer + ' ' + paperNumber);
+            let paperKey = CommercialPaper.makeKey([issuer, paperNumber]);
+            let paper = await ctx.paperList.getPaper(paperKey);
+            return paper;
+          } catch(e) {
+            throw new Error('Paper: ' + paperNumber + 'absentfor' + issuer);
+          }
+    }
+
+
+
     /**
      * Issue commercial paper
      *
